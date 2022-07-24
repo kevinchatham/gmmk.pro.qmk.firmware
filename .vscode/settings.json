@@ -17,7 +17,15 @@
         "xstddef": "c",
         "type_traits": "c",
         "utility": "c",
-        "ranges": "c"
+        "ranges": "c",
+        "__locale": "c",
+        "__string": "c",
+        "string": "c",
+        "string_view": "c",
+        "chrono": "c",
+        "variant": "c",
+        "bitset": "c",
+        "random": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,
@@ -25,6 +33,9 @@
     },
     "python.formatting.provider": "yapf",
     "[json]": {
-	    "editor.formatOnSave": false
-    }
+        "editor.formatOnSave": false
+    },
+    "cmake.sourceDirectory": "${workspaceFolder}/lib/googletest",
+    "C_Cpp.errorSquiggles": "Enabled",
+    "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }

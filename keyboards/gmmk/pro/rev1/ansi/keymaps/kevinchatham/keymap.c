@@ -304,7 +304,6 @@ struct key_to_led
     int s;
     int v;
     int  expires_on;
-    bool pressed;
 };
 
 static struct key_to_led _map[] = {
@@ -448,7 +447,6 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
     if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK)) {
         RGB_MATRIX_INDICATOR_SET_COLOR(LED_CAPS, 255, 0, 0);
-        return;
     }
 
     for (int i = 0; i < LED_SIDE_LEFT_COUNT; i++)
@@ -467,11 +465,13 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
     for (int i = 0; i < MAP_COUNT; i++)
     {
-         if (timer_expired(timer_read(), _map[i].expires_on)){
-            _map[i].h = 0;
-            _map[i].s = 0;
-            _map[i].v = 0;
-            _map[i].expires_on = 0;
+        if (_map[i].key == KC_CAPS) continue;
+
+        bool expired = timer_expired(timer_read(), _map[i].expires_on);
+
+        if (expired) {
+            if (_map[i].v > 0) _map[i].v -= 1;
+            else _map[i].expires_on = 0;
         }
 
         HSV hsv = {.h = _map[i].h, .s = _map[i].s, .v = _map[i].v};
@@ -497,7 +497,7 @@ bool process_record_user(uint16_t key, keyrecord_t *record) {
 
         if (_map[i].key == key && !record->event.pressed){
             int index = rand() % THEME_COUNT;
-            _map[i].h        = _theme[index].h; // rand() % 256; // any in 0 -> 255
+            _map[i].h        = rand() % 256; // _theme[index].hrand() % 256; // any in 0 -> 255
             _map[i].s        = _theme[index].s;
             _map[i].v        = _theme[index].v;
             _map[i].expires_on = (record->event.time+1500)|1;

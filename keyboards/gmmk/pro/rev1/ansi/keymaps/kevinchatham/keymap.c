@@ -304,6 +304,7 @@ struct led
     int  expires_on;
 };
 
+// Color Wheel : https://shorturl.at/gnqS9
 static struct HSV _theme[] = {
     {127, 255, 255},
     {255, 255, 255},
@@ -481,8 +482,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return false;
 }
 
-// * COLOR WHEEL
-// https://camo.githubusercontent.com/97ff9111a8a19e15162113006634530128986a2f8d5342aee7859e1756a189de/68747470733a2f2f692e696d6775722e636f6d2f766b59566f36362e6a7067
 void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     switch (biton32(layer_state)) {
         case 0:
@@ -532,7 +531,6 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     }
 }
 
-// loop
 bool process_record_user(uint16_t key, keyrecord_t *record) {
     for (int i = 0; i < MAP_COUNT; i++)
     {

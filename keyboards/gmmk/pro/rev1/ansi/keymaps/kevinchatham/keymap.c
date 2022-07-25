@@ -292,7 +292,7 @@ struct key_to_led
     int h;
     int s;
     int v;
-    int  expires_on;
+    int expires_on;
 };
 
 struct led
@@ -301,13 +301,15 @@ struct led
     int h;
     int s;
     int v;
-    int  expires_on;
+    int expires_on;
 };
 
-// Color Wheel : https://shorturl.at/gnqS9
+// Color Wheel : https://camo.githubusercontent.com/97ff9111a8a19e15162113006634530128986a2f8d5342aee7859e1756a189de/68747470733a2f2f692e696d6775722e636f6d2f766b59566f36362e6a7067
 static struct HSV _theme[] = {
-    {127, 255, 255},
-    {255, 255, 255},
+    {80, 200, 255}, // green
+    {22, 200, 255},  // tan
+    {155, 200, 255}, // light blue
+    {6, 220, 255},   // island red
 };
 
 int THEME_COUNT = sizeof _theme / sizeof _theme[0];
@@ -338,23 +340,24 @@ static struct led _left_side_map[] = {
 
 int LEFT_SIDE_MAP_COUNT = sizeof _left_side_map / sizeof _left_side_map[0];
 
+static const int side_brightness = 200;
 static struct led _side_map[] = {
-    {LED_R1,0,0,0,0},
-    {LED_R2,0,0,0,0},
-    {LED_R3,0,0,0,0},
-    {LED_R4,0,0,0,0},
-    {LED_R5,0,0,0,0},
-    {LED_R6,0,0,0,0},
-    {LED_R7,0,0,0,0},
-    {LED_R8,0,0,0,0},
-    {LED_L1,0,0,0,0},
-    {LED_L2,0,0,0,0},
-    {LED_L3,0,0,0,0},
-    {LED_L4,0,0,0,0},
-    {LED_L5,0,0,0,0},
-    {LED_L6,0,0,0,0},
-    {LED_L7,0,0,0,0},
-    {LED_L8,0,0,0,0},
+    {LED_R1,0,0,side_brightness,0},
+    {LED_R2,0,0,side_brightness,0},
+    {LED_R3,0,0,side_brightness,0},
+    {LED_R4,0,0,side_brightness,0},
+    {LED_R5,0,0,side_brightness,0},
+    {LED_R6,0,0,side_brightness,0},
+    {LED_R7,0,0,side_brightness,0},
+    {LED_R8,0,0,side_brightness,0},
+    {LED_L1,0,0,side_brightness,0},
+    {LED_L2,0,0,side_brightness,0},
+    {LED_L3,0,0,side_brightness,0},
+    {LED_L4,0,0,side_brightness,0},
+    {LED_L5,0,0,side_brightness,0},
+    {LED_L6,0,0,side_brightness,0},
+    {LED_L7,0,0,side_brightness,0},
+    {LED_L8,0,0,side_brightness,0},
 };
 
 int SIDE_MAP_COUNT = sizeof _side_map / sizeof _side_map[0];
@@ -509,7 +512,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             else _side_map[i].expires_on = 0;
         }
 
-        HSV hsv = {.h = _side_map[i].h, .s = _side_map[i].s, .v = _side_map[i].v/2};
+        HSV hsv = {.h = _side_map[i].h, .s = _side_map[i].s, .v = _side_map[i].v};
         RGB rgb = hsv_to_rgb(hsv);
         RGB_MATRIX_INDICATOR_SET_COLOR(_side_map[i].led, rgb.r, rgb.g, rgb.b);
     }
@@ -549,7 +552,7 @@ bool process_record_user(uint16_t key, keyrecord_t *record) {
             int expires_on = (record->event.time+1500)|1;
             // _theme[index].h
             // rand() % 256 // any in 0 -> 255
-            _map[i].h        = rand() % 256;
+            _map[i].h        = _theme[index].h;
             _map[i].s        = _theme[index].s;
             _map[i].v        = _theme[index].v;
             _map[i].expires_on      = expires_on;

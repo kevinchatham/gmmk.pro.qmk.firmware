@@ -268,8 +268,6 @@ const uint8_t LED_SIDE_LEFT[] = {
     LED_L8
 };
 
-int LED_SIDE_LEFT_COUNT = sizeof LED_SIDE_LEFT / sizeof LED_SIDE_LEFT[0];
-
 const uint8_t LED_SIDE_RIGHT[] = {
     LED_R1,
     LED_R2,
@@ -281,20 +279,11 @@ const uint8_t LED_SIDE_RIGHT[] = {
     LED_R8
 };
 
-int LED_SIDE_RIGHT_COUNT = sizeof LED_SIDE_RIGHT / sizeof LED_SIDE_RIGHT[0];
-
 struct HSV {
     int h;
     int s;
     int v;
 };
-
-static struct HSV _theme[] = {
-    {127, 255, 255},
-    {255, 255, 255},
-};
-
-int THEME_COUNT = sizeof _theme / sizeof _theme[0];
 
 struct key_to_led
 {
@@ -305,6 +294,69 @@ struct key_to_led
     int v;
     int  expires_on;
 };
+
+struct led
+{
+    int led;
+    int h;
+    int s;
+    int v;
+    int  expires_on;
+};
+
+static struct HSV _theme[] = {
+    {127, 255, 255},
+    {255, 255, 255},
+};
+
+int THEME_COUNT = sizeof _theme / sizeof _theme[0];
+
+static struct led _right_side_map[] = {
+    {LED_R1,0,0,0,0},
+    {LED_R2,0,0,0,0},
+    {LED_R3,0,0,0,0},
+    {LED_R4,0,0,0,0},
+    {LED_R5,0,0,0,0},
+    {LED_R6,0,0,0,0},
+    {LED_R7,0,0,0,0},
+    {LED_R8,0,0,0,0},
+};
+
+int RIGHT_SIDE_MAP_COUNT = sizeof _right_side_map / sizeof _right_side_map[0];
+
+static struct led _left_side_map[] = {
+    {LED_L1,0,0,0,0},
+    {LED_L2,0,0,0,0},
+    {LED_L3,0,0,0,0},
+    {LED_L4,0,0,0,0},
+    {LED_L5,0,0,0,0},
+    {LED_L6,0,0,0,0},
+    {LED_L7,0,0,0,0},
+    {LED_L8,0,0,0,0},
+};
+
+int LEFT_SIDE_MAP_COUNT = sizeof _left_side_map / sizeof _left_side_map[0];
+
+static struct led _side_map[] = {
+    {LED_R1,0,0,0,0},
+    {LED_R2,0,0,0,0},
+    {LED_R3,0,0,0,0},
+    {LED_R4,0,0,0,0},
+    {LED_R5,0,0,0,0},
+    {LED_R6,0,0,0,0},
+    {LED_R7,0,0,0,0},
+    {LED_R8,0,0,0,0},
+    {LED_L1,0,0,0,0},
+    {LED_L2,0,0,0,0},
+    {LED_L3,0,0,0,0},
+    {LED_L4,0,0,0,0},
+    {LED_L5,0,0,0,0},
+    {LED_L6,0,0,0,0},
+    {LED_L7,0,0,0,0},
+    {LED_L8,0,0,0,0},
+};
+
+int SIDE_MAP_COUNT = sizeof _side_map / sizeof _side_map[0];
 
 static struct key_to_led _map[] = {
     // {KC_CAPS,LED_CAPS,0,0,0,0}, // covered by other lighting effect
@@ -449,18 +501,18 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         RGB_MATRIX_INDICATOR_SET_COLOR(LED_CAPS, 255, 0, 0);
     }
 
-    for (int i = 0; i < LED_SIDE_LEFT_COUNT; i++)
+    for (int i = 0; i < SIDE_MAP_COUNT; i++)
     {
-        HSV hsv = {.h = _theme[0].h, .s = _theme[0].s, .v = _theme[0].v/2};
-        RGB rgb = hsv_to_rgb(hsv);
-        RGB_MATRIX_INDICATOR_SET_COLOR(LED_SIDE_LEFT[i], rgb.r, rgb.g, rgb.b);
-    }
+        bool expired = timer_expired(timer_read(), _side_map[i].expires_on);
 
-    for (int i = 0; i < LED_SIDE_RIGHT_COUNT; i++)
-    {
-        HSV hsv = {.h = _theme[0].h, .s = _theme[0].s, .v = _theme[0].v/2};
+        if (expired) {
+            if (_side_map[i].v > 0) _side_map[i].v -= 1;
+            else _side_map[i].expires_on = 0;
+        }
+
+        HSV hsv = {.h = _side_map[i].h, .s = _side_map[i].s, .v = _side_map[i].v/2};
         RGB rgb = hsv_to_rgb(hsv);
-        RGB_MATRIX_INDICATOR_SET_COLOR(LED_SIDE_RIGHT[i], rgb.r, rgb.g, rgb.b);
+        RGB_MATRIX_INDICATOR_SET_COLOR(_side_map[i].led, rgb.r, rgb.g, rgb.b);
     }
 
     for (int i = 0; i < MAP_COUNT; i++)
@@ -475,9 +527,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         }
 
         HSV hsv = {.h = _map[i].h, .s = _map[i].s, .v = _map[i].v};
-
         RGB rgb = hsv_to_rgb(hsv);
-
         RGB_MATRIX_INDICATOR_SET_COLOR(_map[i].led, rgb.r, rgb.g, rgb.b);
     }
 }
@@ -495,12 +545,20 @@ bool process_record_user(uint16_t key, keyrecord_t *record) {
         // * on when pressed. on when released
         // if _map[i].key == key
 
-        if (_map[i].key == key && !record->event.pressed){
+        if (_map[i].key == key){
             int index = rand() % THEME_COUNT;
-            _map[i].h        = rand() % 256; // _theme[index].hrand() % 256; // any in 0 -> 255
+            int side_index = rand() % SIDE_MAP_COUNT;
+            int expires_on = (record->event.time+1500)|1;
+            // _theme[index].h
+            // rand() % 256 // any in 0 -> 255
+            _map[i].h        = rand() % 256;
             _map[i].s        = _theme[index].s;
             _map[i].v        = _theme[index].v;
-            _map[i].expires_on = (record->event.time+1500)|1;
+            _map[i].expires_on      = expires_on;
+            _side_map[side_index].h = _map[i].h;
+            _side_map[side_index].s = _map[i].s;
+            _side_map[side_index].v = _map[i].v;
+            _side_map[i].expires_on = expires_on;
         }
     }
     return true;

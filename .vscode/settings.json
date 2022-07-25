@@ -25,7 +25,8 @@
         "chrono": "c",
         "variant": "c",
         "bitset": "c",
-        "random": "c"
+        "random": "c",
+        "__node_handle": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,

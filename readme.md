@@ -16,6 +16,8 @@ https://github.com/osx-cross/homebrew-avr
 
 https://formulae.brew.sh/formula/cmake
 
+EZ Compile : `chmod +x compile.sh && sh compile.sh`
+
 <!--
 ORIGINAL README
 

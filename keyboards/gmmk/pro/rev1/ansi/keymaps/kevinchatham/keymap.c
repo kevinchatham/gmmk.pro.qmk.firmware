@@ -11,11 +11,11 @@ const struct COLOR THEME[] = {
     {6, 220},   // island red
 };
 
-const int BRIGHTNESS = 255;
+const int BRIGHTNESS = 255;      // 0-255
 
-const int SIDE_BRIGHTNESS = 200;
+const int SIDE_BRIGHTNESS = 200; // 0-255
 
-const int FADE_DELAY_MS = 1500;
+const int FADE_DELAY_MS = 1500;  // no more than 30 secs
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 

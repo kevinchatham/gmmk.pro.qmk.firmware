@@ -27,7 +27,8 @@
         "bitset": "c",
         "random": "c",
         "__node_handle": "c",
-        "memory": "c"
+        "memory": "c",
+        "cstddef": "c"
     },
     "[markdown]": {
         "editor.trimAutoWhitespace": false,

@@ -182,17 +182,17 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
   if (index == 0) {
     switch(biton32(layer_state)){
         case 0:
-            if (clockwise) {
-                tap_code(KC_VOLU);
-            } else {
-                tap_code(KC_VOLD);
-            }
-            break;
-        case 1:
             if (clockwise){
                 tap_code(KC_WH_D);
             } else{
                 tap_code(KC_WH_U);
+            }
+            break;
+        case 1:
+            if (clockwise) {
+                tap_code(KC_VOLU);
+            } else {
+                tap_code(KC_VOLD);
             }
             break;
         default:

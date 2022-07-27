@@ -1,6 +1,8 @@
 #include QMK_KEYBOARD_H
 #include "structs.c"
 
+// Preferences
+
 // Color Wheel : https://camo.githubusercontent.com/97ff9111a8a19e15162113006634530128986a2f8d5342aee7859e1756a189de/68747470733a2f2f692e696d6775722e636f6d2f766b59566f36362e6a7067
 const struct COLOR THEME[] = {
     {80, 200},  // green
@@ -54,6 +56,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+// End Preferences
+
 struct LED side_leds[] = {
     {LED_R1,0,0,0,0},
     {LED_R2,0,0,0,0},
@@ -74,11 +78,9 @@ struct LED side_leds[] = {
 };
 
 struct LED_Key led_keys[] = {
-    // {KC_CAPS,LED_CAPS,0,0,0,0}, // covered by other lighting effect
-
+    // Modifiers
     {KC_ESC,LED_ESC,0,0,0,0},
     {KC_TAB,LED_TAB,0,0,0,0},
-
     {KC_LSFT,LED_LSFT,0,0,0,0},
     {KC_LCTL,LED_LCTL,0,0,0,0},
     {KC_LGUI,LED_LWIN,0,0,0,0},
@@ -89,30 +91,30 @@ struct LED_Key led_keys[] = {
     {KC_BSPC,LED_BSPC,0,0,0,0},
     {KC_SPC,LED_SPC,0,0,0,0},
     {KC_ENT,LED_ENT,0,0,0,0},
-
-    {KC_GRV,LED_GRV,0,0,0,0},
-    {KC_BSLS,LED_BSLS,0,0,0,0},
-    {KC_EQL,LED_EQL,0,0,0,0},
-    {KC_MINS,LED_MINS,0,0,0,0},
-    {KC_LBRC,LED_LBRC,0,0,0,0},
-    {KC_RBRC,LED_RBRC,0,0,0,0},
-    {KC_QUOT,LED_QUOT,0,0,0,0},
-    {KC_SLSH,LED_SLSH,0,0,0,0},
-    {KC_SCLN,LED_SCLN,0,0,0,0},
-    {KC_DOT,LED_DOT,0,0,0,0},
-    {KC_COMM,LED_COMM,0,0,0,0},
-
     {KC_DEL,LED_INS,0,0,0,0},
+    // Navigation
     {KC_PGUP, LED_DEL,0,0,0,0},
     {KC_PGDN,LED_PGUP,0,0,0,0},
     {KC_HOME,LED_PGDN,0,0,0,0},
     {KC_END,LED_END,0,0,0,0},
-
     {KC_UP,LED_UP,0,0,0,0},
     {KC_DOWN,LED_DOWN,0,0,0,0},
     {KC_LEFT,LED_LEFT,0,0,0,0},
     {KC_RIGHT,LED_RIGHT,0,0,0,0},
-
+    // Function
+    {KC_F1,LED_F1,0,0,0,0},
+    {KC_F2,LED_F2,0,0,0,0},
+    {KC_F3,LED_F3,0,0,0,0},
+    {KC_F4,LED_F4,0,0,0,0},
+    {KC_F5,LED_F5,0,0,0,0},
+    {KC_F6,LED_F6,0,0,0,0},
+    {KC_F7,LED_F7,0,0,0,0},
+    {KC_F8,LED_F8,0,0,0,0},
+    {KC_F9,LED_F9,0,0,0,0},
+    {KC_F10,LED_F10,0,0,0,0},
+    {KC_F11,LED_F11,0,0,0,0},
+    {KC_F12,LED_F12,0,0,0,0},
+    // Letters
     {KC_A,LED_A,0,0,0,0},
     {KC_B,LED_B,0,0,0,0},
     {KC_C,LED_C,0,0,0,0},
@@ -139,20 +141,7 @@ struct LED_Key led_keys[] = {
     {KC_X,LED_X,0,0,0,0},
     {KC_Y,LED_Y,0,0,0,0},
     {KC_Z,LED_Z,0,0,0,0},
-
-    {KC_F1,LED_F1,0,0,0,0},
-    {KC_F2,LED_F2,0,0,0,0},
-    {KC_F3,LED_F3,0,0,0,0},
-    {KC_F4,LED_F4,0,0,0,0},
-    {KC_F5,LED_F5,0,0,0,0},
-    {KC_F6,LED_F6,0,0,0,0},
-    {KC_F7,LED_F7,0,0,0,0},
-    {KC_F8,LED_F8,0,0,0,0},
-    {KC_F9,LED_F9,0,0,0,0},
-    {KC_F10,LED_F10,0,0,0,0},
-    {KC_F11,LED_F11,0,0,0,0},
-    {KC_F12,LED_F12,0,0,0,0},
-
+    // Numbers
     {KC_1,LED_1,0,0,0,0},
     {KC_2,LED_2,0,0,0,0},
     {KC_3,LED_3,0,0,0,0},
@@ -163,10 +152,25 @@ struct LED_Key led_keys[] = {
     {KC_8,LED_8,0,0,0,0},
     {KC_9,LED_9,0,0,0,0},
     {KC_0,LED_0,0,0,0,0},
+    // Specials
+    {KC_GRV,LED_GRV,0,0,0,0},
+    {KC_BSLS,LED_BSLS,0,0,0,0},
+    {KC_EQL,LED_EQL,0,0,0,0},
+    {KC_MINS,LED_MINS,0,0,0,0},
+    {KC_LBRC,LED_LBRC,0,0,0,0},
+    {KC_RBRC,LED_RBRC,0,0,0,0},
+    {KC_QUOT,LED_QUOT,0,0,0,0},
+    {KC_SLSH,LED_SLSH,0,0,0,0},
+    {KC_SCLN,LED_SCLN,0,0,0,0},
+    {KC_DOT,LED_DOT,0,0,0,0},
+    {KC_COMM,LED_COMM,0,0,0,0},
+    // {KC_CAPS,LED_CAPS,0,0,0,0}, // ignore caps lock
 };
 
 const int MAP_COUNT = sizeof led_keys / sizeof led_keys[0];
+
 const int SIDE_MAP_COUNT = sizeof side_leds / sizeof side_leds[0];
+
 const int THEME_COUNT = sizeof THEME / sizeof THEME[0];
 
 void keyboard_post_init_user(void) {
@@ -282,7 +286,7 @@ bool process_record_user(uint16_t key, keyrecord_t *record) {
     return true;
 }
 
-// * EXTRA MAPS
+// * EXTRA MAPS / MAY BE USED IN FUTURE
 
 // const uint8_t LED_LIST_WASD[] = {
 //     LED_W,

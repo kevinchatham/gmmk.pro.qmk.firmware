@@ -15,7 +15,7 @@ const int BRIGHTNESS = 255;
 
 const int SIDE_BRIGHTNESS = 200;
 
-const int FADE_DELAY = 1500;
+const int FADE_DELAY_MS = 1500;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -255,7 +255,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 bool process_record_user(uint16_t key, keyrecord_t *record) {
     int t = rand() % THEME_COUNT;
     int s = rand() % SIDE_MAP_COUNT;
-    int expires_on = (record->event.time + FADE_DELAY) | 1;
+    int expires_on = (record->event.time + FADE_DELAY_MS) | 1;
 
     while (side_leds[s].expires_on == 0) {
         side_leds[s].h = THEME[t].h;

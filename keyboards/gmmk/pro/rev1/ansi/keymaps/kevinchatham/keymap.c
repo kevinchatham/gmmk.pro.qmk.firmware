@@ -257,7 +257,7 @@ bool process_record_user(uint16_t key, keyrecord_t *record) {
     int s = rand() % SIDE_MAP_COUNT;
     int expires_on = (record->event.time + FADE_DELAY_MS) | 1;
 
-    while (side_leds[s].expires_on == 0) {
+    if (side_leds[s].expires_on == 0) {
         side_leds[s].h = THEME[t].h;
         side_leds[s].s = THEME[t].s;
         side_leds[s].v = SIDE_BRIGHTNESS;

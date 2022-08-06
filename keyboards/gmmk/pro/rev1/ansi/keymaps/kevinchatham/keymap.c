@@ -183,9 +183,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     switch(biton32(layer_state)){
         case 0:
             if (clockwise){
-                tap_code(KC_WH_D);
+                tap_code(KC_DOWN); // KC_WH_D
             } else{
-                tap_code(KC_WH_U);
+                tap_code(KC_UP); // KC_WH_U
             }
             break;
         case 1:

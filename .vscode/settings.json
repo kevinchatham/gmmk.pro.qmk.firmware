@@ -40,5 +40,6 @@
     },
     "cmake.sourceDirectory": "${workspaceFolder}/lib/googletest",
     "C_Cpp.errorSquiggles": "Enabled",
-    "C_Cpp.intelliSenseEngineFallback": "Enabled"
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
+    "dotnet.preferCSharpExtension": true
 }

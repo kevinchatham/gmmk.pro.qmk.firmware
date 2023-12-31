@@ -1,22 +1,44 @@
 # Quantum Mechanical Keyboard Firmware
 
-Light theme colors based on animal crossing keycaps. Keypress triggers random pick from color theme which is applied to the key and random side led before fading off after a period of time. The effect is elegant and not too distracting.
+Light theme colors based on Animal Crossing keycaps. Keypress triggers random pick from color theme which is applied to the key and random side led before fading off after a period of time. The effect is elegant and not too distracting.
 
-Derived from : `gmmk/pro/rev1/ansi/keymaps/gourdo1` (many many thanks!)
+Derived from : `gmmk/pro/rev1/ansi/keymaps/gourdo1` ( many thanks! )
 
 Keyboard : `gmmk/pro/rev1/ansi`
 
 Keymap : `gmmk/pro/rev1/ansi/keymaps/kevinchatham`
 
-Install QMK CLI : `brew install qmk/qmk/qmk`
-
-More deps : https://github.com/osx-cross/homebrew-avr
-
-And more deps : https://formulae.brew.sh/formula/cmake
-
 Compile : `qmk compile -kb gmmk/pro/rev1/ansi -km kevinchatham`
 
-EZ Compile : `chmod +x compile.sh && sh compile.sh`
+Don't forget to clone all of the submodules with `git submodule init` and `git submodule update`
+
+Windows
+
+    https://msys.qmk.fm/
+
+    Use QMK MSYS Shell to install dependencies, build, and compile.
+
+Flashing
+
+    https://github.com/qmk/qmk_toolbox
+
+    Use QMK Toolbox for flashing. Put keyboard into flashing mode by holding Function + Escape.
+
+    If you forget, the function key is two keys to the right of the space bar ( the fossil between the fish and butterfly )
+
+    Select auto-flash and the bin file from ./.build/ after running qmk compile from above.
+
+    MCU: ATmega32U4
+    
+Linux / Mac
+
+    Install QMK CLI : `brew install qmk/qmk/qmk`
+
+    More deps : https://github.com/osx-cross/homebrew-avr
+
+    And more deps : https://formulae.brew.sh/formula/cmake
+
+    EZ Compile : `chmod +x compile.sh && sh compile.sh`
 
 <!--
 ORIGINAL README

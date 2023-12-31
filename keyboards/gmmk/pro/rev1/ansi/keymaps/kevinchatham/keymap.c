@@ -178,22 +178,30 @@ void keyboard_post_init_user(void) {
     rgb_matrix_sethsv(HSV_OFF);
 }
 
+void encoder_scroll(bool clockwise) {
+    if (clockwise){
+        tap_code(KC_DOWN);
+    } else{
+        tap_code(KC_UP);
+    }
+}
+
+void encoder_volume(bool clockwise) {
+    if (clockwise) {
+        tap_code(KC_VOLU);
+    } else {
+        tap_code(KC_VOLD);
+    }
+}
+
 bool encoder_update_user(uint8_t index, bool clockwise) {
   if (index == 0) {
     switch(biton32(layer_state)){
         case 0:
-            if (clockwise){
-                tap_code(KC_DOWN); // KC_WH_D
-            } else{
-                tap_code(KC_UP); // KC_WH_U
-            }
+            encoder_volume(clockwise);
             break;
         case 1:
-            if (clockwise) {
-                tap_code(KC_VOLU);
-            } else {
-                tap_code(KC_VOLD);
-            }
+            encoder_scroll(clockwise);
             break;
         default:
             break;
